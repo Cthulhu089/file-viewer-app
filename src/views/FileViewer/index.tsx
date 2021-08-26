@@ -1,15 +1,20 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import styled from "styled-components/macro";
 import DocViewer, {
   PDFRenderer,
   TXTRenderer,
   JPGRenderer,
   MSDocRenderer,
+  PNGRenderer,
 } from "react-doc-viewer";
 
 const StyledDocViewer = styled(DocViewer)`
   #pdf-download {
     display: none;
+  }
+
+  #proxy-renderer {
+    user-select: none;
   }
 `;
 
@@ -28,18 +33,31 @@ const FileViewerView = () => {
       {
         uri: "./image1.jpg",
       },
+      {
+        uri: "./index.png",
+      },
     ],
     []
   );
 
+  useEffect(() => {
+    const docContainer = document.getElementById("proxy-renderer");
+    if (docContainer) {
+      docContainer.addEventListener("contextmenu", (e) => e.preventDefault());
+    }
+  }, []);
+
   return (
     <div className="App">
       <StyledDocViewer
-        pluginRenderers={[PDFRenderer, TXTRenderer, JPGRenderer, MSDocRenderer]}
+        pluginRenderers={[
+          PDFRenderer,
+          TXTRenderer,
+          JPGRenderer,
+          MSDocRenderer,
+          PNGRenderer,
+        ]}
         documents={docs}
-        config={{
-          header: {},
-        }}
       />
       <header className="App-header">
         <p>
