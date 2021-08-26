@@ -1,12 +1,6 @@
 import { useEffect, useMemo } from "react";
 import styled from "styled-components/macro";
-import DocViewer, {
-  PDFRenderer,
-  TXTRenderer,
-  JPGRenderer,
-  MSDocRenderer,
-  PNGRenderer,
-} from "react-doc-viewer";
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 const StyledDocViewer = styled(DocViewer)`
   #pdf-download {
@@ -49,16 +43,7 @@ const FileViewerView = () => {
 
   return (
     <div className="App">
-      <StyledDocViewer
-        pluginRenderers={[
-          PDFRenderer,
-          TXTRenderer,
-          JPGRenderer,
-          MSDocRenderer,
-          PNGRenderer,
-        ]}
-        documents={docs}
-      />
+      <StyledDocViewer pluginRenderers={DocViewerRenderers} documents={docs} />
       <header className="App-header">
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
